@@ -128,7 +128,25 @@
 .drop.has-image .drop-hint small { display: none; }
 .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
 .span-2 { grid-column: span 2; }
-.class-chip.fixed { height: 40px; width: max-content; color: var(--accent); }
+.class-pick { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.class-pick input { position: absolute; opacity: 0; pointer-events: none; }
+.class-pick span {
+  display: grid;
+  place-items: center;
+  height: 44px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--bg-2);
+  font-family: var(--display);
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--muted);
+  cursor: pointer;
+  transition: border-color .2s, background .2s, color .2s;
+}
+.class-pick span:hover { border-color: var(--line-hi); }
+.class-pick input:checked + span { border-color: var(--accent); background: rgba(108, 196, 255, .12); color: var(--accent); }
+.class-pick input:focus-visible + span { outline: 2px solid var(--brand); outline-offset: 2px; }
 .editor-actions { display: flex; gap: 10px; }
 .editor-actions .btn { flex: 1; }
 .confirm-card { width: min(420px, 100%); padding: 28px 24px 24px; display: grid; gap: 12px; }

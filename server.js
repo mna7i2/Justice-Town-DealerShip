@@ -1,6 +1,6 @@
 // =====================================================================
 //  Justice Town — Car Showroom
-//  Public catalog of Class C cars + a hidden admin page where staff
+//  Public catalog of Class A–D cars + a hidden admin page where staff
 //  sign in with a password and add/edit/remove cars, prices, stock and
 //  pictures. Everything an admin changes is checked on the server.
 // =====================================================================
@@ -130,6 +130,10 @@ function imageType(buf) {
   return null;
 }
 
+const CLASSES = ['A', 'B', 'C', 'D'];
+// cars saved before classes existed were all Class C
+const classOf = (c) => (CLASSES.includes(c.class) ? c.class : 'C');
+
 // What visitors see — no staff names
 function publicCar(c) {
   return {
@@ -138,7 +142,7 @@ function publicCar(c) {
     price: c.price,
     quantity: c.quantity,
     note: c.note || '',
-    class: 'C',
+    class: classOf(c),
     image: c.imageType ? `/img/${c.id}/${c.imageVersion}` : '',
     createdAt: c.createdAt,
   };
@@ -288,6 +292,8 @@ function readCarFields(body, { requireImage }) {
   const quantity = cleanInt(body?.quantity, 0, 9999);
   if (quantity === null) return { error: 'bad_quantity' };
   const note = cleanText(body?.note, 200);
+  const carClass = String(body?.class || '').toUpperCase();
+  if (!CLASSES.includes(carClass)) return { error: 'bad_class' };
   let image = null;
   if (body?.image) {
     image = decodeImage(body.image);
@@ -295,7 +301,7 @@ function readCarFields(body, { requireImage }) {
   } else if (requireImage) {
     return { error: 'image_required' };
   }
-  return { fields: { name, price, quantity, note }, image };
+  return { fields: { name, price, quantity, note, class: carClass }, image };
 }
 
 app.post('/api/admin/cars', requireAdmin, wrap(async (req, res) => {

@@ -12,6 +12,7 @@
     rate_limited: 'محاولات كثيرة — انتظر دقيقة وجرب مرة ثانية.',
     bad_price: 'السعر لازم يكون رقم صحيح بدون فواصل.',
     bad_quantity: 'الكمية لازم تكون رقم من 0 إلى 9999.',
+    bad_class: 'اختر الفئة (A أو B أو C أو D).',
     bad_image: 'الصورة ما تنفع — جرب صورة JPG أو PNG أو WebP ثانية.',
     image_required: 'لازم تحط صورة للسيارة.',
     too_large: 'الصورة كبيرة مرة — جرب صورة أصغر.',
@@ -109,7 +110,7 @@
     const ok = car.quantity > 0;
     meta.append(el('span', `pill ${ok ? 'ok' : 'bad'}`, ok ? 'متوفر' : 'غير متوفر'));
     meta.append(document.createTextNode(`أضافها ${car.addedBy}${car.updatedBy ? ` · آخر تعديل: ${car.updatedBy}` : ''}`));
-    info.append(el('h3', '', car.name), el('b', 'price-num', money(car.price)), meta);
+    info.append(el('small', 'cls', `CLASS ${car.class}`), el('h3', '', car.name), el('b', 'price-num', money(car.price)), meta);
 
     const stepper = el('div', 'stepper');
     const minus = el('button', '', '−');
@@ -186,6 +187,8 @@
     $('#f-price').value = car ? car.price : '';
     $('#f-qty').value = car ? car.quantity : 1;
     $('#f-note').value = car ? car.note : '';
+    const cls = car ? car.class : 'C';
+    document.querySelectorAll('input[name="f-class"]').forEach((r) => { r.checked = r.value === cls; });
     $('#f-image').value = '';
     $('#form-error').hidden = true;
     setPreview(car ? car.image : '');
@@ -252,6 +255,7 @@
       price: Number($('#f-price').value),
       quantity: Number($('#f-qty').value),
       note: $('#f-note').value,
+      class: ($('input[name="f-class"]:checked') || {}).value,
     };
     if (state.image) body.image = state.image;
     if (body.name.trim().length < 2) { err.textContent = errorText('bad_name'); err.hidden = false; return; }

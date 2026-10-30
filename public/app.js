@@ -3,7 +3,7 @@
   const $ = (s, root = document) => root.querySelector(s);
   const $$ = (s, root = document) => [...root.querySelectorAll(s)];
 
-  const state = { cars: [], filter: 'all', sort: 'new', q: '' };
+  const state = { cars: [], filter: 'all', cls: 'all', sort: 'new', q: '' };
   const money = (n) => `$${Number(n).toLocaleString('en-US')}`;
 
   function el(tag, cls, text) {
@@ -39,7 +39,7 @@
     const body = el('div', 'car-body');
     const row = el('div', 'car-row');
     const title = el('div');
-    title.append(el('small', 'cls', 'CLASS C'), el('h3', '', car.name));
+    title.append(el('small', 'cls', `CLASS ${car.class}`), el('h3', '', car.name));
     const price = el('div', 'price');
     price.append(el('small', '', 'السعر'), el('b', 'price-num', money(car.price)));
     row.append(title, price);
@@ -65,7 +65,10 @@
 
   function visibleCars() {
     const q = state.q.trim().toLowerCase();
-    let list = state.cars.filter((c) => (state.filter === 'avail' ? c.quantity > 0 : true) && (!q || c.name.toLowerCase().includes(q)));
+    let list = state.cars.filter((c) =>
+      (state.filter === 'avail' ? c.quantity > 0 : true)
+      && (state.cls === 'all' || c.class === state.cls)
+      && (!q || c.name.toLowerCase().includes(q)));
     const by = {
       new: (a, b) => b.createdAt - a.createdAt,
       'price-asc': (a, b) => a.price - b.price,
@@ -104,6 +107,7 @@
     lastFocus = document.activeElement;
     $('#d-img').src = car.image || '';
     $('#d-img').alt = car.name;
+    $('#d-class').textContent = `CLASS ${car.class}`;
     $('#d-name').textContent = car.name;
     $('#d-note').textContent = car.note;
     $('#d-note').hidden = !car.note;
@@ -137,6 +141,7 @@
   // ---------------- Controls ----------------
   $('#q').addEventListener('input', (e) => { state.q = e.target.value; renderCatalog(); });
   $('#sort').addEventListener('change', (e) => { state.sort = e.target.value; renderCatalog(); });
+  $('#cls').addEventListener('change', (e) => { state.cls = e.target.value; renderCatalog(); });
   $$('.seg button').forEach((b) => b.addEventListener('click', () => {
     $$('.seg button').forEach((x) => x.classList.toggle('on', x === b));
     state.filter = b.dataset.filter;

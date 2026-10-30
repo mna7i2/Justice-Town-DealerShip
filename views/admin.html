@@ -56,7 +56,7 @@
 
       <div class="admin-head">
         <div>
-          <span class="eyebrow">CLASS C · INVENTORY</span>
+          <span class="eyebrow">CLASS A · B · C · D</span>
           <h1>السيارات</h1>
         </div>
         <div class="stats">
@@ -113,7 +113,12 @@
         </label>
         <div class="field span-2">
           <span>الفئة</span>
-          <span class="class-chip fixed">Class C</span>
+          <div class="class-pick" role="radiogroup" aria-label="الفئة">
+            <label><input type="radio" name="f-class" value="A"><span>A</span></label>
+            <label><input type="radio" name="f-class" value="B"><span>B</span></label>
+            <label><input type="radio" name="f-class" value="C" checked><span>C</span></label>
+            <label><input type="radio" name="f-class" value="D"><span>D</span></label>
+          </div>
         </div>
       </div>
 
