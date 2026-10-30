@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Justice Town — معرض السيارات</title>
+  <meta name="description" content="معرض سيارات سيرفر Justice Town — تشكيلة Class C بالأسعار والكميات المتوفرة.">
+  <meta name="theme-color" content="#05070c">
+  <link rel="icon" href="/assets/logo-circle.webp">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Readex+Pro:wght@300;400;500;600;700&display=swap">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="wrap topbar-in">
+      <a class="brand" href="#home">
+        <img src="/assets/logo-circle.webp" alt="" width="40" height="40">
+        <span><b>Justice Town</b><small>SHOWROOM · FIVEM</small></span>
+      </a>
+      <nav class="tabs" aria-label="التنقل">
+        <a href="#home" data-view="home">الرئيسية</a>
+        <a href="#cars" data-view="cars">السيارات</a>
+      </nav>
+      <a class="btn ghost sm" id="top-discord" target="_blank" rel="noopener" hidden>Discord</a>
+    </div>
+  </header>
+
+  <main>
+    <!-- ============ Home ============ -->
+    <section class="view" id="view-home">
+      <div class="hero gridded">
+        <div class="wrap hero-in">
+          <div class="hero-copy">
+            <span class="eyebrow">CLASS C · SHOWROOM</span>
+            <h1>معرض <em>Justice Town</em></h1>
+            <p>سيارات مختارة بعناية لشوارع المدينة — شوف الأسعار والكميات المتوفرة قبل لا تزور المعرض داخل اللعبة.</p>
+            <div class="hero-cta">
+              <a class="btn primary" href="#cars">تصفح السيارات</a>
+              <a class="btn ghost" id="hero-discord" target="_blank" rel="noopener" hidden>سيرفر الدسكورد</a>
+            </div>
+          </div>
+          <div class="hero-emblem" aria-hidden="true">
+            <img src="/assets/logo.webp" alt="">
+          </div>
+        </div>
+        <div class="wrap">
+          <div class="stats hero-stats">
+            <div class="stat"><b data-stat="total">0</b><small>سيارة في المعرض</small></div>
+            <div class="stat"><b class="ok" data-stat="avail">0</b><small>متوفرة الحين</small></div>
+            <div class="stat"><b data-stat="from">—</b><small>تبدأ الأسعار من</small></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="wrap section">
+        <div class="section-head">
+          <h2>أحدث الإضافات</h2>
+          <a class="link" href="#cars">عرض الكل ←</a>
+        </div>
+        <div class="grid" id="latest-grid"></div>
+        <p class="empty" id="latest-empty" hidden>ما فيه سيارات في المعرض للحين — ترقبوا.</p>
+      </div>
+    </section>
+
+    <!-- ============ Catalog ============ -->
+    <section class="view" id="view-cars" hidden>
+      <div class="page-head gridded">
+        <div class="wrap page-head-in">
+          <div>
+            <span class="eyebrow">LUXURY COLLECTION —</span>
+            <h1 class="display">التشكيلة</h1>
+            <p>اكتشف تشكيلتنا من سيارات الفئة C — مختارة لمن يبي الأداء والشكل بنفس الوقت.</p>
+          </div>
+          <div class="stats">
+            <div class="stat"><b data-stat="total">0</b><small>المجموع</small></div>
+            <div class="stat"><b class="ok" data-stat="avail">0</b><small>متوفر</small></div>
+            <div class="stat"><b class="bad" data-stat="out">0</b><small>غير متوفر</small></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="wrap">
+        <div class="toolbar">
+          <label class="search">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+            <input id="q" type="search" placeholder="ابحث عن سيارة..." autocomplete="off" maxlength="40">
+          </label>
+          <div class="seg" role="group" aria-label="التوفر">
+            <button type="button" class="on" data-filter="all">الكل</button>
+            <button type="button" data-filter="avail">المتوفرة</button>
+          </div>
+          <span class="class-chip">Class C</span>
+          <label class="select">
+            <select id="sort" aria-label="الترتيب">
+              <option value="new">الأحدث</option>
+              <option value="price-asc">السعر: من الأقل</option>
+              <option value="price-desc">السعر: من الأعلى</option>
+              <option value="name">الاسم</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="list-head">
+          <span><b id="count">0</b> سيارة معروضة</span>
+          <span class="tag">COLLECTION —</span>
+        </div>
+        <div class="grid" id="cars-grid"></div>
+        <p class="empty" id="cars-empty" hidden>ما فيه سيارات تطابق بحثك.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer-in">
+      <div class="brand">
+        <img src="/assets/logo-circle.webp" alt="" width="40" height="40">
+        <span><b>Justice Town</b><small>SHOWROOM · FIVEM</small></span>
+      </div>
+      <p>معرض السيارات في سيرفر Justice Town — تجربة قيادة استثنائية.</p>
+      <div class="footer-links">
+        <a class="btn ghost sm" id="foot-discord" target="_blank" rel="noopener" hidden>Discord</a>
+        <a class="btn ghost sm" id="foot-server" target="_blank" rel="noopener" hidden>صفحة السيرفر</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Car details -->
+  <div class="modal" id="car-modal" hidden>
+    <div class="modal-card car-detail" role="dialog" aria-modal="true" aria-labelledby="d-name">
+      <button type="button" class="modal-x" data-close aria-label="إغلاق">✕</button>
+      <div class="detail-media"><img id="d-img" alt=""></div>
+      <div class="detail-body">
+        <small class="cls">CLASS C</small>
+        <h3 id="d-name"></h3>
+        <p id="d-note" class="muted"></p>
+        <div class="detail-facts">
+          <div><small>السعر</small><b id="d-price" class="price-num"></b></div>
+          <div><small>الكمية</small><b id="d-qty"></b></div>
+          <div><small>الحالة</small><span id="d-status" class="pill"></span></div>
+        </div>
+        <p class="hint">للشراء: زور المعرض داخل المدينة.</p>
+      </div>
+    </div>
+  </div>
+
+  <script src="/app.js"></script>
+</body>
+</html>
